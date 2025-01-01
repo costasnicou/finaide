@@ -1,0 +1,453 @@
+html,body{
+    padding: 0;
+    margin: 0;
+    font-family: "Roboto", serif;
+}
+
+nav{
+    text-align: center; 
+    background-color: rgb(7, 87, 71);
+    padding: 20px;
+    height: 25px;
+    position: fixed;
+    width: 100%;
+    z-index: 10;
+    top: 0;
+}
+
+
+a{
+    color: white;
+    text-decoration: none;
+    margin: 20px;
+ 
+}
+
+section{
+    padding: 40px;
+}
+
+a:hover{
+    color: rgb(245, 250, 104);
+    text-decoration: none;
+ 
+}
+
+
+.cover-photo{
+    height: 600px;
+    /* background-color: azure; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background:linear-gradient(0deg, rgba(40, 40, 40, 0.3), rgba(62, 62, 62, 0.3)), url('../images/cover.jpg');
+ 
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* background-color: aquamarine; */
+    color: white;
+}
+
+.cover-photo h1{
+    margin: 0;
+    font-size: 70px;
+    text-shadow: 2px 2px 2px #000;
+}
+
+.cover-photo h2 {
+    font-size: 30px;
+    text-shadow: 2px 2px 2px #000;
+    width: 40%;
+    text-align: center;
+    line-height: 50px;
+}
+
+
+.btn{
+    background-color: rgba(0, 0, 0, 0.841);
+    background-color: white;
+    background-color: rgba(7, 87, 71, 0.841);
+    padding: 10px 40px;
+    border: 1px solid rgba(0, 0, 0, 0.976);
+    color: white;
+    border-radius: 10px;
+    transition: all ease-in 0.5s;
+}
+
+.btn:hover{
+    background-color: rgba(5, 64, 52, 0.841);
+    color: white;
+}
+
+.article-about-us{
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
+   
+}
+.section-title{
+    color: rgb(7, 87, 71);
+    font-size: 25px;
+    border-bottom: 2px solid rgb(7, 87, 71);
+    display: inline-block;
+    /* margin: 0 auto; */
+    font-weight: 300;
+    padding-bottom: 5px;
+}
+
+.article-about-us p {
+    width: 50%;
+    margin: 0 auto;
+    font-size: 17px;
+    font-weight: 300;
+}
+
+.promotion{
+  
+    background-color: rgb(72, 110, 90);
+    margin-top: 80px;
+    height: 80px;
+    position: relative;
+}
+
+.promotion img{
+    text-align: center;
+    width: 400;
+    height: 300px;
+    position: absolute;
+    top: -90px;
+    left: 45%;
+}
+
+
+
+
+.reasons-section{
+    background-color: rgb(248, 248, 248);
+    text-align: center;
+    background:linear-gradient(0deg, rgba(40, 40, 40, 0.3), rgba(62, 62, 62, 0.3)), url('../images/parallax.jpg');
+  
+    background-size: cover;
+
+     /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+}
+.section-title.reasons-title{
+    text-align: center;
+    margin: 50px auto 50px auto;
+    font-weight: 700;
+    color: white;
+    border-bottom: 2px solid white;
+
+}
+.reasons{
+    display: flex;
+    justify-content: center;
+    padding: 20px 40px 40px 40px;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.reason{
+    width: 250px;
+    height: 300px;
+    border: 1px solid rgb(61, 79, 71);
+    position: relative;
+    background-color: rgb(56, 56, 56);
+    border-radius: 20px;
+    box-shadow: 14px 10px 102px -23px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 14px 10px 102px -23px rgba(0,0,0,0.75);
+    -moz-box-shadow: 14px 10px 102px -23px rgba(0,0,0,0.75);
+    margin: 0 40px;
+    transition: all ease-in 0.3s;
+}
+
+.reason:hover{
+    transform: scale(1.1);
+    background-color: rgb(26, 36, 28);
+}
+.reason p{
+    padding: 20px 30px;
+    margin-top: 50px;
+    color: rgb(233, 233, 233);
+}
+
+.reason h4 {
+    text-align: center;
+    background-color: rgb(21, 114, 91);
+    color: white;
+    padding: 10px;
+    width: 270px;
+    margin: 0 auto;
+    position: absolute;
+    /* right: 5%; */
+    right: 0px;
+    left: -20px;
+    top: 10px;
+    border-radius: 20px;
+}
+
+
+/* features */
+
+
+.why-flex{
+    display: flex;
+    justify-content: center;
+    width: 60%;
+    margin: 0 auto;
+   
+}
+
+.why-flex > *{
+   
+    margin:0 50px;
+    /* width: 50%; */
+}
+
+
+.why-flex img{
+    width: 300px !important;
+    height: 500px;
+    /* width: 50%; */
+    
+    position: relative;
+    left: 100px;
+  
+}
+
+.advisor{
+  width: 45%;
+  padding: 20px;
+}
+
+.why-article {
+  width: 55%;
+  position: relative;
+  top: 50px;
+}
+.why-list{
+  
+    list-style: none;
+}
+.why-list li{
+    padding: 8px;
+    font-size: 22px;
+    /* width: 90%; */
+    color: #616161;
+}
+
+.why-list li::before{
+    font-family: FontAwesome;
+    content: '\f00c';
+    font-size: 20px;
+    color: rgb(4, 75, 31);
+    /* margin: 20px;
+     */
+     position: relative;
+     right: 20px;
+}
+
+.signup-btn{
+ 
+    padding: 10px 40px;
+    margin-top: 20px;
+    margin-left: 30px;
+    display: inline-block;
+}
+  /* TESTIMONIALS */
+
+
+.testimonials{
+    text-align: center;
+    background-color: #fafafa; */ 
+}
+
+.testimonials-title {
+
+  color:  rgba(54, 106, 85, 0.519);
+  border-color:rgba(54, 106, 85, 0.519);
+  position: relative;
+  top: 50px;
+  font-weight: 400;
+  width: 200px;
+}
+
+
+/* testimonials slider */
+
+/* SLIDER */
+.slider {
+  max-width: 100rem;
+  height: 30rem;
+  margin: 100px auto;
+  /* margin-top: 100px; */
+  position: relative;
+  color: white;
+  background-color: rgba(54, 106, 85, 0.519);
+  /* background-color: rgba(27, 27, 27, 0.664); */
+  overflow: hidden;
+  border-radius: 90px;
+  box-shadow: 14px 10px 102px -23px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 14px 10px 102px -23px rgba(0,0,0,0.75);
+    -moz-box-shadow: 14px 10px 102px -23px rgba(0,0,0,0.75);
+
+    transition: all ease-in 0.5s;
+  }
+
+  .slider:hover{
+    background-color: rgba(43, 83, 67, 0.519);
+  }
+  .slide {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 30rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 1s;
+}
+  
+  .slide > img {
+    /* Only for images that have different size than slide */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .slider__btn {
+    position: absolute;
+    top: 50%;
+    z-index: 10;
+  
+    border: none;
+    background: rgba(255, 255, 255, 0.7);
+    font-family: inherit;
+    color: #333;
+    border-radius: 50%;
+    height: 5.5rem;
+    width: 5.5rem;
+    font-size: 3.25rem;
+    cursor: pointer;
+  }
+  
+  .slider__btn--left {
+    left: 6%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .slider__btn--right {
+    right: 6%;
+    transform: translate(50%, -50%);
+  }
+  
+  .dots {
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+  }
+  
+  .dots__dot {
+    border: none;
+    background-color: #fdfdfd;
+    opacity: 0.7;
+    height: 1rem;
+    width: 1rem;
+    border-radius: 50%;
+    margin-right: 1.75rem;
+    cursor: pointer;
+    transition: all 0.5s;
+  
+    /* Only necessary when overlying images */
+    /* box-shadow: 0 0.6rem 1.5rem rgba(0, 0, 0, 0.7); */
+  }
+  
+  .dots__dot:last-child {
+    margin: 0;
+  }
+  
+  .dots__dot--active {
+    /* background-color: #fff; */
+    background-color: #bdcac7;
+    opacity: 1;
+  }
+  
+
+.testimonial {
+  width: 65%;
+  position: relative;
+}
+.testimonial::before {
+  content: '\201C';
+  position: absolute;
+  top: 0.3rem;
+  left: -6.8rem;
+  line-height: 1;
+  font-size: 10rem;
+  font-family: inherit;
+  color: var(--color-primary);
+  z-index: -1;
+}
+.testimonial__header {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
+.testimonial__text {
+  font-size: 1.2rem;
+  margin-bottom: 3.5rem;
+  color: white;
+}
+  
+.testimonial__author {
+  margin-left: 3rem;
+  font-style: normal;
+
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  column-gap: 2rem;
+}
+
+.testimonial__photo {
+  grid-row: 1 / span 2;
+  width: 6.5rem;
+  border-radius: 50%;
+}
+
+.testimonial__name {
+  font-size: 1.5rem;
+  font-weight: 500;
+  align-self: end;
+  margin: 0;
+}
+.testimonial__location {
+font-size: 1.3rem;
+}
+
+.section__title--testimonials {
+  margin-bottom: 4rem;
+}
+
+
+.call-to-action-article{
+  text-align: center;
+  margin: 0 auto;
+  width: 30%;
+  color: rgb(65, 65, 65);
+}
+
+
+
+
+footer{
+    height: 300px;
+    background-color: rgb(4, 48, 40);
+}
