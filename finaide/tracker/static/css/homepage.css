@@ -4,19 +4,42 @@ html,body{
     font-family: "Roboto", serif;
 }
 
-nav{
+.main-menu{
     text-align: center; 
-    background-color: rgb(7, 87, 71);
+    /* background-color: rgb(7, 87, 71); */
+    background: rgb(65,156,156);
+    background: linear-gradient(90deg, rgba(65,156,156,1) 0%, rgb(8, 69, 56) 100%);
     padding: 20px;
     height: 25px;
     position: fixed;
     width: 100%;
     z-index: 10;
     top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* position: relative; */
 }
 
+.logout-form{
+  position: absolute;
+  right: 120px;
+}
 
-a{
+.logout-btn{
+  background-color: rgb(19, 134, 103);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 10px;
+  margin: 20px;
+
+
+}
+
+.logout-btn:hover{
+  background-color: rgb(14, 94, 73);
+}
+.main-menu a{
     color: white;
     text-decoration: none;
     margin: 20px;
@@ -27,8 +50,8 @@ section{
     padding: 40px;
 }
 
-a:hover{
-    color: rgb(245, 250, 104);
+.main-menu a:hover{
+    color: rgb(112, 199, 164);
     text-decoration: none;
  
 }
@@ -73,6 +96,7 @@ a:hover{
     color: white;
     border-radius: 10px;
     transition: all ease-in 0.5s;
+    text-decoration: none;
 }
 
 .btn:hover{
@@ -289,8 +313,11 @@ a:hover{
   /* margin-top: 100px; */
   position: relative;
   color: white;
-  background-color: rgba(54, 106, 85, 0.519);
+  /* background-color: rgba(179, 179, 179, 0.519);
+  background-color: rgba(43, 83, 67, 0.519); */
   /* background-color: rgba(27, 27, 27, 0.664); */
+  background: rgb(65,156,156);
+  background: linear-gradient(90deg, rgba(65,156,156,1) 0%, rgba(8, 69, 56, 0.547) 100%);
   overflow: hidden;
   border-radius: 90px;
   box-shadow: 14px 10px 102px -23px rgba(0,0,0,0.75);

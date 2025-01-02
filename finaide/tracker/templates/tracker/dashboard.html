@@ -7,53 +7,106 @@
 
 {% endblock %}
 {% block main %}
-<h1>Welcome, {{ user.username }}</h1>
-<form action="{% url 'logout' %}" method="post">
+<div class="dashboard wrapper shadow ">
+    <h1>Welcome, {{ user.username }}</h1>
+    <h2>Total Balance:  <span class="total-balance">€{{ total_balance }}</span></h2>
+
+
+    <section class="sum shadow">
+        <h3>Financial Information</h3>
+        <div class="dashboard-flex">
+            <div class="dashboard-view income">
+            
+                <p>Total Income: €{{ total_income }}</p>
+            </div>
+    
+            <div class="dashboard-view expenses">
+                <p>Total Expenses: €{{ total_expenses }}</p>
+            </div>
+    
+            <div class="dashboard-view net">
+                <p>Net Balance: €{{ net_balance }}</p>
+            </div>
+    
+        </div>
+       
+    </section>
+
+    <section class="wallet-section shadow">
+        <h3>Your Wallets:</h3>
+        <div class="wallets">
+            <div class="wallet-flex">
+                {% for wallet in wallets %}
+                    
+                        <p class="wallet">{{ wallet.name }} <br> Balance: €{{ wallet.balance }}
+                            <br>
+                            <a href="{% url 'delete_wallet' wallet.id %}" >Delete</a>
+                        </p>               
+                        
+                    
+                {% endfor %}
+            </div>
+            <button class="dashboard-btn open-wallet-modal show-form" onclick="openWalletModal()">Add Wallet</button>
+        </div>
+    </section>
+
+    <section class="transactions-section shadow">
+        <h3>Recent Transactions:</h3>
+        <div class="transaction-section-wrapper">
+
+       
+
+            
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th>Wallet</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaction in transactions %}
+                        <tr>
+                            <td>{{ transaction.type }}</td>
+                            <td>{{ transaction.category }}</td>
+                            <td>{{ transaction.amount }}</td>
+                            <td>{{ transaction.wallet.name }}</td>
+                            <td>{{ transaction.timestamp|date:"Y-m-d H:i" }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="5">No transactions available.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button class="dashboard-btn open-trans-modal show-form" onclick="openTransModal()">Add Transaction</button>
+
+        </div>
+    </section>
+  
+</div>
+
+<form class="wallet_form wallet-modal modal hidden" method="post">
     {% csrf_token %}
-    <button type="submit">Log Out</button>
+    <button class="close-form" onclick="closeModal()">X</button>
+    <h1>Add Wallet</h1>
+    {{ wallet_form.as_p }}
+    <button type="submit" name="submit_wallet_form" class="btn" onclick="hide_wallet()">Save</button>
+</form>        
+<div class="overlay hidden"></div>
+
+   
+<form method="post" class="trans-modal modal hidden">
+    {% csrf_token %}
+    <button class="close-form" onclick="closeModal()">X</button>
+    <h1>Add Transaction</h1>
+    {{ transaction_form.as_p }}
+    <button type="submit" name="submit_transaction_form" class="btn">Add Transaction</button>
 </form>
-<h2>Total Balance: {{ total_balance }}</h2>
-
-<!-- Wallets Section -->
-<h3>Your Wallets:</h3>
-<a href="{% url 'add_wallet' %}">Add Wallet</a>
-<ul>
-    {% for wallet in wallets %}
-        <li>
-            {{ wallet.name }} ({{ wallet.category }}) - Balance: {{ wallet.balance }}
-            <a href="{% url 'add_transaction' wallet.id %}">Add Transaction</a>
-            <a href="{% url 'delete_wallet' wallet.id %}" style="color: red;">Delete</a>
-        </li>
-    {% endfor %}
-</ul>
-
-<!-- Transactions Section -->
-<h3>Recent Transactions:</h3>
-<table border="1">
-    <thead>
-        <tr>
-            <th>Type</th>
-            <th>Category</th>
-            <th>Amount</th>
-            <th>Wallet</th>
-            <th>Date</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for transaction in transactions %}
-            <tr>
-                <td>{{ transaction.type }}</td>
-                <td>{{ transaction.category }}</td>
-                <td>{{ transaction.amount }}</td>
-                <td>{{ transaction.wallet.name }}</td>
-                <td>{{ transaction.timestamp|date:"Y-m-d H:i" }}</td>
-            </tr>
-        {% empty %}
-            <tr>
-                <td colspan="5">No transactions available.</td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="overlay hidden"></div>
 
 {% endblock %}

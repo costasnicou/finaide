@@ -1,0 +1,238 @@
+.dashboard{
+    /* margin-top: 100px; */
+    min-height: 600px;
+    padding: 80px;
+    /* margin: 0 auto; */
+    /* background-color: aquamarine; */
+    border-radius: 40px;
+ 
+}
+.hidden{
+    display: none;
+}
+.wrapper{
+    width: 85%;
+    margin: 100px auto;
+    text-align: center;
+    
+}
+
+
+.dashboard h1{
+    text-align: center;
+}
+
+h2.navigate{
+    text-align: left !important;
+}
+
+.dashboard h2{
+    text-align: right;
+
+}
+
+.total-balance{
+    color: rgb(15, 112, 81);
+}
+
+section h3{
+    text-align: center;
+}
+
+.sum,.wallet-section{
+    padding: 0;
+    margin: 0;
+}
+
+.dashboard-flex{
+    display: flex;
+    width: 95%;
+    justify-content: space-evenly;
+    /* border: 1px solid black; */
+    margin: 0 auto;
+    
+   
+
+}
+
+.dashboard-view{
+    width: 300px;
+    margin: 20px;
+    /* padding: 20px; */
+    text-align: center;
+    color: white;
+    background: rgb(65,156,156);
+    background: linear-gradient(90deg, rgba(65,156,156,1) 0%, rgba(8,69,56,0.6278886554621849) 100%);
+    margin: 20px;
+    border-radius: 40px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+.shadow{
+    box-shadow: 14px 10px 102px -23px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 14px 10px 102px -23px rgba(0,0,0,0.75);
+    -moz-box-shadow: 14px 10px 102px -23px rgba(0,0,0,0.75);
+     /* margin: 20px 0; */
+   
+}
+
+.sum,.wallet-section,.transactions-section{
+    border-radius: 20px;
+    padding: 20px 0;
+    margin: 20px;
+}
+.wallet_form{
+    border: 1px solid green;
+    padding: 20px;
+    width: 300px;
+    border-radius: 20px;
+   /* display: none; */
+
+}
+
+.wallet-flex{
+    display: flex;
+    justify-content: center;
+}
+.wallet-section{
+    padding-top: 20px;
+    /* margin-top: 40px; */
+    padding-bottom: 20px;
+}
+.wallets{
+    text-align: center;
+    
+
+    
+}
+
+.wallet{
+    /* border: 1px solid green; */
+    padding: 10px;
+    /* border: 1px solid rgb(77, 218, 143) ;; */
+    width: 200px;
+    border-radius: 10px;
+    text-align: center;
+    color: white;
+    
+    /* border: 1px solid black; */
+    /* background: rgb(65,156,156); */
+    /* background: linear-gradient(90deg, rgba(65,156,156,1) 0%, rgba(8,69,56,0.6278886554621849) 100%); */
+    background: rgb(65,156,156);
+    background: linear-gradient(90deg, rgba(65,156,156,1) 0%, rgba(8,69,56,0.6278886554621849) 100%);
+    
+    margin: 0 10px;
+  
+}
+
+.wallet:hover{
+    background-color: rgb(80, 179, 181);
+    color: white;
+}
+
+.wallet a{
+    color: white;
+    margin-top: 10px;
+    display: inline-block;
+    text-decoration: none;
+    border:1px solid white ;
+    padding:10px;
+}
+
+.wallet a:hover{
+    /* background-color: rgb(191, 66, 66) ; */
+    color: white;
+    background: rgba(65, 156, 156, 0.534);
+    background: linear-gradient(90deg, rgba(65,156,156,1) 0%, rgba(26, 190, 154, 0.628) 100%);
+}
+
+.show-form{
+    margin: 20px;
+  
+}
+
+table{
+    border-radius: 10px;
+    margin: 0 auto;
+}
+
+thead{
+    background: rgb(65,156,156);
+    background: linear-gradient(90deg, rgba(65,156,156,1) 0%, rgba(8,69,56,0.6278886554621849) 100%);
+    color: white;
+}
+th{
+    width: 150px;
+    text-align: center;
+    padding: 10px;    
+}
+
+td{
+    padding: 10px;    
+}
+.dashboard-btn{
+    width: 150px;
+    padding: 10px;
+    /* height: 100px; */
+    margin-bottom: 20px;
+    background-color: tomato;
+    border:1px solid white;
+    border-radius: 10px;
+    color:white;
+}
+
+.dashboard-btn:hover{
+    background-color: rgb(238, 92, 66);
+    /* background-color: tomato; */
+    color: white;
+}
+
+
+
+
+.transaction-section-wrapper{
+    width: 80%;
+    margin: 0 auto;
+}
+
+
+
+
+
+
+
+
+/* modal */
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 25%;
+  
+    background-color: white;
+    padding: 6rem;
+    border-radius: 5px;
+    box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+    z-index: 10;
+
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+    z-index: 5;
+  }
+  
+  .close-form{
+    position: absolute;
+    right: 100px;
+    top: 50px;
+  }
