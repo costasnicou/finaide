@@ -50,7 +50,7 @@ def dashboard(request):
                 wallet.save()
                 return redirect('dashboard')
         elif 'submit_transaction_form' in request.POST:  # Check which form was submitted
-            transaction_form_submitted = TransactionForm(request.POST)
+            transaction_form_submitted = TransactionForm(request.POST,user=request.user)
             if transaction_form_submitted.is_valid():
                 transaction = transaction_form_submitted.save(commit=False)
                 wallet = transaction_form_submitted.cleaned_data['wallet']
@@ -62,34 +62,34 @@ def dashboard(request):
                 wallet.save()
                 transaction.save()
                 return redirect('dashboard')
-        # Handle the edit or delete of a transaction
-        if transaction_id:
-            # Get the transaction object
-            transaction = get_object_or_404(Transaction, id=transaction_id)
+        # # Handle the edit or delete of a transaction
+        # if transaction_id:
+        #     # Get the transaction object
+        #     transaction = get_object_or_404(Transaction, id=transaction_id)
 
-            # Initialize the transaction form with the existing transaction data
-            transaction_form_submitted = TransactionForm(request.POST, user=request.user, instance=transaction)
+        #     # Initialize the transaction form with the existing transaction data
+        #     transaction_form_submitted = TransactionForm(request.POST, user=request.user, instance=transaction)
 
-            if transaction_form_submitted.is_valid():
-                # If delete button is clicked, delete the transaction
-                if 'delete_transaction' in request.POST:
-                    transaction.delete()
-                    messages.success(request, "Transaction deleted successfully!")
-                    return redirect('dashboard')
+        #     if transaction_form_submitted.is_valid():
+        #         # If delete button is clicked, delete the transaction
+        #         if 'delete_transaction' in request.POST:
+        #             transaction.delete()
+        #             messages.success(request, "Transaction deleted successfully!")
+        #             return redirect('dashboard')
                 
-                # Otherwise, update the transaction
-                transaction_form_submitted.save()
+        #         # Otherwise, update the transaction
+        #         transaction_form_submitted.save()
 
-                # Adjust the wallet balance
-                wallet = transaction.wallet
-                if transaction.type == 'Income':
-                    wallet.balance += transaction.amount
-                else:
-                    wallet.balance -= transaction.amount
-                wallet.save()
+        #         # Adjust the wallet balance
+        #         wallet = transaction.wallet
+        #         if transaction.type == 'Income':
+        #             wallet.balance += transaction.amount
+        #         else:
+        #             wallet.balance -= transaction.amount
+        #         wallet.save()
 
-                messages.success(request, "Transaction updated successfully!")
-                return redirect('dashboard')
+        #         messages.success(request, "Transaction updated successfully!")
+        #         return redirect('dashboard')
 
 
 
