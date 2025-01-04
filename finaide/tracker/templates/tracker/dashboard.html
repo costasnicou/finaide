@@ -7,32 +7,12 @@
 
 {% endblock %}
 {% block main %}
-<div class="dashboard wrapper shadow ">
+<div class="dashboard wrapper  ">
     <h1>Welcome, {{ user.username }}</h1>
     <h2>Total Balance:  <span class="total-balance">€{{ total_balance }}</span></h2>
 
 
-    <section class="sum shadow">
-        <h3>Financial Information</h3>
-        <div class="dashboard-flex">
-            <div class="dashboard-view income">
-            
-                <p>Total Income: €{{ total_income }}</p>
-            </div>
-    
-            <div class="dashboard-view expenses">
-                <p>Total Expenses: €{{ total_expenses }}</p>
-            </div>
-    
-            <div class="dashboard-view net">
-                <p>Net Balance: €{{ net_balance }}</p>
-            </div>
-    
-        </div>
-       
-    </section>
-
-    <section class="wallet-section shadow">
+    <section class="wallet-section dashboard-shadow">
         <h3>Your Wallets:</h3>
         <div class="wallets">
             <div class="wallet-flex">
@@ -50,7 +30,28 @@
         </div>
     </section>
 
-    <section class="transactions-section shadow">
+
+    <section class="sum dashboard-shadow">
+        <h3>Financial Information</h3>
+        <div class="dashboard-flex">
+            <div class="dashboard-view income">
+            
+                <p>Total Income: €{{ total_income | floatformat:2  }}</p>
+            </div>
+    
+            <div class="dashboard-view expenses">
+                <p>Total Expenses: €{{ total_expenses|floatformat:2  }}</p>
+            </div>
+    
+            <div class="dashboard-view net">
+                <p>Net Balance: €{{ net_balance|floatformat:2  }}</p>
+            </div>
+    
+        </div>
+       
+    </section>
+
+    <section class="transactions-section dashboard-shadow">
         <h3>Recent Transactions:</h3>
         <div class="transaction-section-wrapper">
 
@@ -69,26 +70,33 @@
                 </thead>
                 <tbody>
                     {% for transaction in transactions %}
-                        <tr>
-                            <td>{{ transaction.type }}</td>
-                            <td>{{ transaction.category }}</td>
-                            <td>{{ transaction.amount }}</td>
-                            <td>{{ transaction.wallet.name }}</td>
-                            <td>{{ transaction.timestamp|date:"Y-m-d H:i" }}</td>
-                        </tr>
+                    <tr>
+                        <td>{{ transaction.type }}</td>
+                        <td>{{ transaction.category }}</td>
+                        {% if transaction.type == "Expense" %}
+                            <td>€-{{ transaction.amount }}</td>
+                        {% else %}
+                            <td>€{{ transaction.amount }}</td>
+                        {% endif %}
+                        <td>{{ transaction.wallet.name }}</td>
+                        <td>{{ transaction.timestamp|date:"Y-m-d H:i" }}</td>
+                        
+                    </tr>
                     {% empty %}
                         <tr>
-                            <td colspan="5">No transactions available.</td>
+                            <td colspan="6">No transactions available.</td>
                         </tr>
                     {% endfor %}
+                    
                 </tbody>
             </table>
             <button class="dashboard-btn open-trans-modal show-form" onclick="openTransModal()">Add Transaction</button>
 
         </div>
     </section>
-  
+
 </div>
+
 
 <form class="wallet_form wallet-modal modal hidden" method="post">
     {% csrf_token %}
@@ -108,5 +116,7 @@
     <button type="submit" name="submit_transaction_form" class="btn">Add Transaction</button>
 </form>
 <div class="overlay hidden"></div>
+
+
 
 {% endblock %}

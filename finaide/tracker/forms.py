@@ -42,8 +42,6 @@ class TransactionForm(forms.ModelForm):
 
 
 
-
-
 class WalletForm(forms.ModelForm):
     class Meta:
         model = Wallet

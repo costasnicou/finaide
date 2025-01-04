@@ -2,8 +2,9 @@
     /* margin-top: 100px; */
     min-height: 600px;
     padding: 80px;
-    /* margin: 0 auto; */
-    /* background-color: aquamarine; */
+    margin: 0 auto;
+    /* background: rgb(218, 232, 227);
+    background: linear-gradient(90deg, rgb(172, 216, 216) 0%, rgba(198, 216, 212, 0.628) 100%); */
     border-radius: 40px;
  
 }
@@ -82,6 +83,7 @@ section h3{
     border-radius: 20px;
     padding: 20px 0;
     margin: 20px;
+    background-color: rgb(247, 247, 247);
 }
 .wallet_form{
     border: 1px solid green;
@@ -90,6 +92,13 @@ section h3{
     border-radius: 20px;
    /* display: none; */
 
+}
+
+
+.dashboard-shadow{
+    -webkit-box-shadow: 2px 8px 31px -13px rgba(0,0,0,0.75);
+-moz-box-shadow: 2px 8px 31px -13px rgba(0,0,0,0.75);
+box-shadow: 2px 8px 31px -13px rgba(0,0,0,0.75);
 }
 
 .wallet-flex{
@@ -225,7 +234,7 @@ td{
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 165%;
     background-color: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(3px);
     z-index: 5;
@@ -236,3 +245,180 @@ td{
     right: 100px;
     top: 50px;
   }
+
+
+  /* updated css */
+  .dashboard {
+    min-height: 600px;
+    padding: 60px;
+    margin: 0 auto;
+    border-radius: 20px;
+    background: linear-gradient(145deg, #f3f4f6, #e2e8f0);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.hidden {
+    display: none;
+}
+
+.wrapper {
+    width: 85%;
+    margin: 80px auto;
+    text-align: center;
+}
+
+.dashboard h1, .dashboard h2 {
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    color: #2d3748;
+    margin-bottom: 20px;
+}
+
+h2.navigate {
+    text-align: left !important;
+}
+
+.total-balance {
+    color: #2b6cb0;
+    font-size: 2rem;
+}
+
+section h3 {
+    text-align: center;
+    color: #4a5568;
+    font-size: 1.5rem;
+}
+
+.sum, .wallet-section {
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 15px;
+    background: #edf2f7;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 20px;
+}
+
+.dashboard-view {
+    width: 300px;
+    padding: 30px;
+    text-align: center;
+    color: #ffffff;
+    background: linear-gradient(135deg, #38b2ac, #285e61);
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dashboard-view:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.wallet {
+    width: 200px;
+    padding: 20px;
+    text-align: center;
+    color: #ffffff;
+    background: linear-gradient(145deg, #38b2ac, #285e61);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.wallet:hover {
+    background-color: #319795;
+}
+
+.wallet a {
+    color: #ffffff;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background: #285e61;
+    transition: background 0.3s ease;
+}
+
+.wallet a:hover {
+    background: #38b2ac;
+}
+
+.dashboard-btn {
+    width: 150px;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #e53e3e;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.dashboard-btn:hover {
+    background-color: #c53030;
+}
+
+table {
+    border-radius: 10px;
+    margin: 20px auto;
+    width: 90%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: linear-gradient(90deg, #38b2ac, #285e61);
+    color: white;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30%;
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 5;
+}
+
+.close-form {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #718096;
+}
+
+.close-form:hover {
+    color: #2d3748;
+}

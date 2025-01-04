@@ -22,7 +22,14 @@ const overlay = document.querySelector('.overlay');
 // const btnOpenWalletModal = document.querySelector('.open-wallet-modal');
 // const btnsOpenTransModal = document.querySelectorAll('.open-trans-modal');
 
+const popupBtns = document.querySelectorAll('.toTop');
+
+
 const openWalletModal = function () {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth" // Smooth scrolling
+});
   walletModal.classList.remove('hidden');
   overlay.classList.remove('hidden');
 };
@@ -30,6 +37,10 @@ const openWalletModal = function () {
 const openTransModal = function () {
   transModal.classList.remove('hidden');
   overlay.classList.remove('hidden');
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth" // Smooth scrolling
+});
 };
 
 const closeModal = function (){
