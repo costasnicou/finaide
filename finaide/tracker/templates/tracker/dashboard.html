@@ -69,25 +69,34 @@
                     </tr>
                 </thead>
                 <tbody>
+               
                     {% for transaction in transactions %}
-                    <tr>
-                        <td>{{ transaction.type }}</td>
-                        <td>{{ transaction.category }}</td>
-                        {% if transaction.type == "Expense" %}
-                            <td>€-{{ transaction.amount }}</td>
-                        {% else %}
-                            <td>€{{ transaction.amount }}</td>
-                        {% endif %}
-                        <td>{{ transaction.wallet.name }}</td>
-                        <td>{{ transaction.timestamp|date:"Y-m-d H:i" }}</td>
-                        
-                    </tr>
-                    {% empty %}
+                        <tr>
+                            <td>{{ transaction.type }}</td>
+                            <td>{{ transaction.category }}</td>
+                            <td>
+                                {% if transaction.type == "Expense" %}
+                                    €-{{ transaction.amount }}
+                                {% else %}
+                                    €+{{ transaction.amount }}
+                                {% endif %}
+                            </td>
+                            <td>{{ transaction.wallet.name }}</td>
+                            <td>{{ transaction.timestamp|date:"Y-m-d H:i" }}</td>
+                            <td>
+                             <!-- Edit Button -->
+                                <button type="button" class="dashboard-btn" onclick="openEditTransModal({{ transaction.id }})" data-toggle="modal" data-target="#editTransactionModal{{ transaction.id }}">
+                                    Edit
+                                </button>
+                            </td>
+                        </tr>
+                        {% empty %}
                         <tr>
                             <td colspan="6">No transactions available.</td>
                         </tr>
-                    {% endfor %}
+             
                     
+                    {% endfor %}
                 </tbody>
             </table>
             <button class="dashboard-btn open-trans-modal show-form" onclick="openTransModal()">Add Transaction</button>
@@ -116,6 +125,41 @@
     <button type="submit" name="submit_transaction_form" class="btn">Add Transaction</button>
 </form>
 <div class="overlay hidden"></div>
+
+
+<!-- Modal for Editing Transaction -->
+{% for transaction in transactions %}
+<div class="modal edit-trans-modal hidden" id="editTransactionModal{{ transaction.id }}" tabindex="-1" role="dialog" aria-labelledby="editTransactionModalLabel{{ transaction.id }}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h1 class="modal-title" id="editTransactionModalLabel{{ transaction.id }}">Edit Transaction</h1>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="transaction_id" value="{{ transaction.id }}">
+                    
+                    <!-- Use the transaction's pre-populated form -->
+                    {{ transaction.edit_form.as_p }}
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" name="transaction_form_submitted" class="btn btn-primary">Save changes</button>
+                    <!-- Delete Button -->
+                    <button type="submit" name="delete_transaction" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this transaction?')">
+                        Delete Transaction
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="overlay hidden"></div>
+{% endfor %}
 
 
 
