@@ -41,7 +41,7 @@ def signup(request):
 def dashboard(request):
     # Process form submission for creating/editing a transaction
     if request.method == 'POST':
-        transaction_id = request.POST.get('transaction_id')
+        
         if 'submit_wallet_form' in request.POST:  # Check which form was submitted
             wallet_form_submitted = WalletForm(request.POST)
             if wallet_form_submitted.is_valid():
@@ -66,6 +66,8 @@ def dashboard(request):
         
             # Handle transaction edit or delete
        
+        # for editing transaction form
+        transaction_id = request.POST.get('transaction_id')
         if transaction_id:
             # Get the transaction object
             transaction = get_object_or_404(Transaction, id=transaction_id)
@@ -75,22 +77,22 @@ def dashboard(request):
             original_type = transaction.type
             original_amount = transaction.amount
 
-        # Initialize the transaction form with the existing transaction data
-        transaction_form_submitted = TransactionForm(request.POST, user=request.user, instance=transaction)
+            # Initialize the transaction form with the existing transaction data
+            transaction_form_submitted = TransactionForm(request.POST, user=request.user, instance=transaction)
 
-        if transaction_form_submitted.is_valid():
-            # If delete button is clicked, delete the transaction
-            if 'delete_transaction' in request.POST:
-                wallet = transaction.wallet
-                if transaction.type == 'Income':
-                    wallet.balance -= transaction.amount  # Revert the effect of the transaction
-                elif transaction.type == 'Expense':
-                    wallet.balance += transaction.amount  # Revert the effect of the transaction
-                wallet.save()
+            if transaction_form_submitted.is_valid():
+                # If delete button is clicked, delete the transaction
+                if 'delete_transaction' in request.POST:
+                    wallet = transaction.wallet
+                    if transaction.type == 'Income':
+                        wallet.balance -= transaction.amount  # Revert the effect of the transaction
+                    elif transaction.type == 'Expense':
+                        wallet.balance += transaction.amount  # Revert the effect of the transaction
+                    wallet.save()
 
-                transaction.delete()  # Delete the transaction
-                messages.success(request, "Transaction deleted successfully!")
-                return redirect('dashboard')
+                    transaction.delete()  # Delete the transaction
+                    messages.success(request, "Transaction deleted successfully!")
+                    return redirect('dashboard')
 
             # Otherwise, update the transaction
             updated_transaction = transaction_form_submitted.save(commit=False)
@@ -126,54 +128,39 @@ def dashboard(request):
 
                 original_wallet.save()
 
-        # Save the updated transaction
-        updated_transaction.save()
-        messages.success(request, "Transaction updated successfully!")
-        return redirect('dashboard')
-        # if transaction_id:
-        #     # Get the transaction object
-        #     transaction = get_object_or_404(Transaction, id=transaction_id)
+            # Save the updated transaction
+            updated_transaction.save()
+            messages.success(request, "Transaction updated successfully!")
+            return redirect('dashboard')
+       
+        #editing wallet form
+        # Editing a wallet
+        wallet_id = request.POST.get('wallet_id')
 
-        #     # Initialize the transaction form with the existing transaction data
-        #     transaction_form_submitted = TransactionForm(request.POST, user=request.user, instance=transaction)
-
-        #     if transaction_form_submitted.is_valid():
-        #             # If delete button is clicked, delete the transaction
-                    
-        #         # Handle the transaction deletion
-        #         if 'delete_transaction' in request.POST:
-        #             wallet = transaction.wallet
-        #             if transaction.type == 'Income':
-        #                 wallet.balance -= transaction.amount  # Revert the effect of the transaction
-        #             elif transaction.type == 'Expense':
-        #                 wallet.balance += transaction.amount  # Revert the effect of the transaction
-        #             wallet.save()
-
-                
-        #         # Otherwise, update the transaction
-        #         transaction_form_submitted.save()
-
-        #         # Adjust the wallet balance
-        #         wallet = transaction.wallet
-        #         if transaction.type == 'Income':
-        #             wallet.balance += transaction.amount
-        #         else:
-        #             wallet.balance -= transaction.amount
-        #         wallet.save()
-
-        #         messages.success(request, "Transaction updated successfully!")
-        #         return redirect('dashboard')
-    
+        
+        if wallet_id:
+            wallet = get_object_or_404(Wallet, id=wallet_id, user=request.user)
+            
+            if 'delete_wallet' in request.POST:  # Check if the delete button was clicked
+                wallet.delete()
+                messages.success(request, "Wallet deleted successfully!")
+                return redirect('dashboard')
+            wallet_form_submitted = WalletForm(request.POST, instance=wallet)
+            if wallet_form_submitted.is_valid():
+                wallet_form_submitted.save()
+                messages.success(request, "Wallet updated successfully!")
+                return redirect('dashboard')
   
 
 
 
-    
+
     # Initialize data to display on the dashboard
     wallet_form = WalletForm()
     transaction_form = TransactionForm(user=request.user)
 
     wallets = Wallet.objects.filter(user=request.user)
+    wallet_forms = {wallet.id: WalletForm(instance=wallet) for wallet in wallets}
     transactions = Transaction.objects.filter(wallet__user=request.user).order_by('-timestamp')
    # Attach a form pre-populated with each transaction's data
     for transaction in transactions:
@@ -186,6 +173,7 @@ def dashboard(request):
     transaction_forms = {transaction.id: TransactionForm(instance=transaction, user=request.user) for transaction in transactions}
     return render(request, 'tracker/dashboard.html', {
         'wallets': wallets,
+        'wallet_forms':wallet_forms,
         'transactions': transactions,
         'total_balance': total_balance,
         'wallet_form': wallet_form,
