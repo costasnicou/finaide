@@ -8,5 +8,5 @@ urlpatterns = [
     # path('add-transaction/<int:wallet_id>/', views.add_transaction, name='add_transaction'),
     path('signup/', views.signup, name='signup'),
   
-    path('delete-wallet/<int:wallet_id>/', views.delete_wallet, name='delete_wallet'),
+    # path('delete-wallet/<int:wallet_id>/', views.delete_wallet, name='delete_wallet'),
 ]

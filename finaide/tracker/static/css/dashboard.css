@@ -79,6 +79,9 @@ section h3{
    
 }
 
+
+
+
 .sum,.wallet-section,.transactions-section{
     border-radius: 20px;
     padding: 20px 0;
@@ -117,24 +120,6 @@ box-shadow: 2px 8px 31px -13px rgba(0,0,0,0.75);
     
 }
 
-.wallet{
-    /* border: 1px solid green; */
-    padding: 10px;
-    /* border: 1px solid rgb(77, 218, 143) ;; */
-    width: 200px;
-    border-radius: 10px;
-    text-align: center;
-    color: white;
-    
-    /* border: 1px solid black; */
-    /* background: rgb(65,156,156); */
-    /* background: linear-gradient(90deg, rgba(65,156,156,1) 0%, rgba(8,69,56,0.6278886554621849) 100%); */
-    background: rgb(65,156,156);
-    background: linear-gradient(90deg, rgba(65,156,156,1) 0%, rgba(8,69,56,0.6278886554621849) 100%);
-    
-    margin: 0 10px;
-  
-}
 
 .wallet:hover{
     background-color: rgb(80, 179, 181);
@@ -332,6 +317,15 @@ section h3 {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease;
+    font-size: 18px;
+}
+
+.wallet-header{
+    font-size: 19px;
+}
+
+.wallet-amount{
+    font-size: 19px;
 }
 
 .wallet:hover {

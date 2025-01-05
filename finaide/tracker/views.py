@@ -14,9 +14,11 @@ from django.contrib.auth.views import LoginView
 from .forms import CustomLoginForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Transaction, Wallet
-from .forms import TransactionForm
+from .models import Transaction, Wallet,Fat
+from .forms import TransactionForm, SignupForm
 from django.contrib import messages
+from django.contrib.auth import login
+from .forms import SignupForm
 
 class CustomLoginView(LoginView):
     authentication_form = CustomLoginForm
@@ -25,18 +27,18 @@ class CustomLoginView(LoginView):
 def homepage(request):
     return render(request, 'tracker/homepage.html')
 
+
 def signup(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST,user=request.user)
+        form = SignupForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)  # Log the user in after successful signup
-            return redirect('dashboard')  # Redirect to the dashboard after signup
+            user = form.save()  # Save the user to the database
+            # login(request, user)  # Automatically log in the user
+            return redirect('login')  # Redirect to your desired page
     else:
-        form = UserCreationForm()
+        form = SignupForm()
+
     return render(request, 'tracker/signup.html', {'form': form})
-
-
 @login_required
 def dashboard(request):
     # Process form submission for creating/editing a transaction
@@ -135,26 +137,54 @@ def dashboard(request):
        
         #editing wallet form
         # Editing a wallet
-        wallet_id = request.POST.get('wallet_id')
+        # wallet_id = request.POST.get('wallet_id')
 
         
-        if wallet_id:
-            wallet = get_object_or_404(Wallet, id=wallet_id, user=request.user)
+        # if wallet_id:
+        #     wallet = get_object_or_404(Wallet, id=wallet_id, user=request.user)
             
-            if 'delete_wallet' in request.POST:  # Check if the delete button was clicked
-                wallet.delete()
-                messages.success(request, "Wallet deleted successfully!")
-                return redirect('dashboard')
-            wallet_form_submitted = WalletForm(request.POST, instance=wallet)
-            if wallet_form_submitted.is_valid():
-                wallet_form_submitted.save()
-                messages.success(request, "Wallet updated successfully!")
-                return redirect('dashboard')
+        #     if 'delete_wallet' in request.POST:  # Check if the delete button was clicked
+        #         wallet.delete()
+        #         messages.success(request, "Wallet deleted successfully!")
+        #         return redirect('dashboard')
+        #     wallet_form_submitted = WalletForm(request.POST, instance=wallet)
+        #     if wallet_form_submitted.is_valid():
+        #         wallet_form_submitted.save()
+        #         messages.success(request, "Wallet updated successfully!")
+        #         return redirect('dashboard')
   
 
 
+    wallet_id = request.POST.get('wallet_id')
 
+    if wallet_id:
+        wallet = get_object_or_404(Wallet, id=wallet_id, user=request.user)
 
+        if 'delete_wallet' in request.POST:  # Check if the delete button was clicked
+            wallet.delete()
+            messages.success(request, "Wallet deleted successfully!")
+            return redirect('dashboard')
+
+        wallet_form_submitted = WalletForm(request.POST, instance=wallet)
+        initial_balance = wallet.balance
+        if wallet_form_submitted.is_valid():
+            # Get the original balance before saving
+            
+            
+            # Save the updated wallet instance
+            updated_wallet = wallet_form_submitted.save(commit=False)
+            
+            # Get the new balance from the form
+            updated_balance = updated_wallet.balance
+
+            # Save the wallet instance
+            updated_wallet.save()
+
+            # Update the Fat model's amount using the balance difference
+            wallet.update_fat_balance(initial_balance)
+     
+            messages.success(request, "Wallet updated successfully!")
+            return redirect('dashboard')
     # Initialize data to display on the dashboard
     wallet_form = WalletForm()
     transaction_form = TransactionForm(user=request.user)
@@ -166,6 +196,14 @@ def dashboard(request):
     for transaction in transactions:
         transaction.edit_form = TransactionForm(instance=transaction, user=request.user)
     # Calculate totals
+    
+
+    # Add Fat instances to context
+    # wallet_fat_data = {
+    #     wallet.id: wallet.fat for wallet in wallets if hasattr(wallet, 'fat')
+    # }
+
+    
     total_balance = sum(wallet.balance for wallet in wallets)
     total_income = Transaction.objects.filter(wallet__user=request.user, type='Income').aggregate(total=Sum('amount'))['total'] or 0
     total_expenses = Transaction.objects.filter(wallet__user=request.user, type='Expense').aggregate(total=Sum('amount'))['total'] or 0
@@ -182,21 +220,6 @@ def dashboard(request):
         'total_expenses': total_expenses,
         'net_balance': net_balance,
         'transaction_forms':transaction_forms,
+        # 'wallet_fat_data': wallet_fat_data,
     })
 
-
-
-
-# delete wallet
-@login_required
-def delete_wallet(request, wallet_id):
-    wallet = get_object_or_404(Wallet, id=wallet_id, user=request.user)
-
-    # Deduct the wallet balance from the total balance before deletion
-    wallet_balance = wallet.balance
-
-    if request.method == 'POST':
-        wallet.delete()
-        return redirect('dashboard')
-
-    return render(request, 'tracker/confirm_delete_wallet.html', {'wallet': wallet})

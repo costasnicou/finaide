@@ -18,10 +18,16 @@
         <div class="wallets">
             <div class="wallet-flex">
                 {% for wallet in wallets %}
-                    <p class="wallet">
-                        <strong>{{ wallet.name }}</strong><br>
-                        Balance: €{{ wallet.balance }}<br><br>
-                        <!-- <a href="{% url 'delete_wallet' wallet.id %}">Delete</a> | -->
+                    <p class="wallet"><br>
+                        <span class="wallet-header"><strong>{{ wallet.name }}</strong></span><br>
+                        Balance: <span class="wallet-amount"> €{{ wallet.balance }}</span><br>
+                        {% if wallet.fat %}
+                            Fat Amount: <span class="wallet-amount"> €{{ wallet.fat.amount }}</span>
+                        {% else %}
+                            No Fat data available.
+                        {% endif %}
+                                            <br><br>
+                       
                         <button type="button" class="btn open-edit-wallet-modal" onclick="openEditWalletModal({{ wallet.id }})" data-toggle="modal" data-target="#editWalletModal{{ wallet.id }}">
                             Edit
                         </button>
