@@ -39,6 +39,7 @@ def signup(request):
         form = SignupForm()
 
     return render(request, 'tracker/signup.html', {'form': form})
+
 @login_required
 def dashboard(request):
     # Process form submission for creating/editing a transaction
@@ -203,7 +204,8 @@ def dashboard(request):
     #     wallet.id: wallet.fat for wallet in wallets if hasattr(wallet, 'fat')
     # }
 
-    
+    # Calculate the total fat
+    total_fat = Fat.objects.aggregate(total=Sum('amount'))['total'] or 0.00
     total_balance = sum(wallet.balance for wallet in wallets)
     total_income = Transaction.objects.filter(wallet__user=request.user, type='Income').aggregate(total=Sum('amount'))['total'] or 0
     total_expenses = Transaction.objects.filter(wallet__user=request.user, type='Expense').aggregate(total=Sum('amount'))['total'] or 0
@@ -220,6 +222,7 @@ def dashboard(request):
         'total_expenses': total_expenses,
         'net_balance': net_balance,
         'transaction_forms':transaction_forms,
+        'total_fat': total_fat,
         # 'wallet_fat_data': wallet_fat_data,
     })
 
