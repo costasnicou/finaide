@@ -318,6 +318,7 @@ section h3 {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease;
     font-size: 18px;
+    margin:0 20px;
 }
 
 .wallet-header{
