@@ -95,8 +95,9 @@ section{
     border: 1px solid rgba(0, 0, 0, 0.976);
     color: white;
     border-radius: 10px;
-    transition: all ease-in 0.5s;
+    /* transition: all ease-in 0.3s; */
     text-decoration: none;
+    transition:all 0.3s ease;
 }
 
 .btn:hover{

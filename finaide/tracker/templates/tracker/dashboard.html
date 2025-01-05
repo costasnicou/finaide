@@ -49,15 +49,15 @@
         <div class="dashboard-flex">
             <div class="dashboard-view income">
             
-                <p>Total Income: €{{ total_income | floatformat:2  }}</p>
+                <p>Total Income: <span class="dashboard-amount">€{{ total_income | floatformat:2  }}</span></p>
             </div>
     
             <div class="dashboard-view expenses">
-                <p>Total Expenses: €{{ total_expenses|floatformat:2  }}</p>
+                <p>Total Expenses:  <span class="dashboard-amount">€{{ total_expenses|floatformat:2  }}</span></p>
             </div>
     
             <div class="dashboard-view net">
-                <p>Net Balance: €{{ net_balance|floatformat:2  }}</p>
+                <p>Net Balance: <span class="dashboard-amount">€{{ net_balance|floatformat:2  }}</span></p>
             </div>
     
         </div>

@@ -175,6 +175,7 @@ td{
     border:1px solid white;
     border-radius: 10px;
     color:white;
+    transition:all 0.3s ease;
 }
 
 .dashboard-btn:hover{
@@ -292,6 +293,19 @@ section h3 {
     gap: 20px;
 }
 
+.wallet {
+    width: 250px;
+    padding: 20px;
+    text-align: center;
+    color: #ffffff;
+    background: linear-gradient(145deg, #38b2ac, #285e61);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition:all 0.3s ease;
+    font-size: 17px;
+    margin:0 20px;
+}
+
 .dashboard-view {
     width: 300px;
     padding: 30px;
@@ -301,32 +315,28 @@ section h3 {
     border-radius: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    font-size: 17px;
 }
 
-.dashboard-view:hover {
+.dashboard-amount{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.dashboard-view:hover,.wallet:hover{
     transform: translateY(-5px);
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.wallet {
-    width: 200px;
-    padding: 20px;
-    text-align: center;
-    color: #ffffff;
-    background: linear-gradient(145deg, #38b2ac, #285e61);
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
-    font-size: 18px;
-    margin:0 20px;
-}
+
 
 .wallet-header{
-    font-size: 19px;
+    font-size: 18px;
 }
 
 .wallet-amount{
-    font-size: 19px;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .wallet:hover {
