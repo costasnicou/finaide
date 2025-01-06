@@ -19,9 +19,11 @@ from .forms import TransactionForm, SignupForm
 from django.contrib import messages
 from django.contrib.auth import login
 from .forms import SignupForm
+from decimal import Decimal
 
 class CustomLoginView(LoginView):
     authentication_form = CustomLoginForm
+
 
 
 def homepage(request):
@@ -40,8 +42,12 @@ def signup(request):
 
     return render(request, 'tracker/signup.html', {'form': form})
 
+
 @login_required
 def dashboard(request):
+    # Initialize total_expenses and total_income with default values
+    # total_expenses = Decimal('0.00')
+    # total_income = Decimal('0.00')
     # Process form submission for creating/editing a transaction
     if request.method == 'POST':
         
@@ -72,6 +78,7 @@ def dashboard(request):
         # for editing transaction form
         transaction_id = request.POST.get('transaction_id')
         if transaction_id:
+
             # Get the transaction object
             transaction = get_object_or_404(Transaction, id=transaction_id)
 
@@ -136,56 +143,93 @@ def dashboard(request):
             messages.success(request, "Transaction updated successfully!")
             return redirect('dashboard')
        
-        #editing wallet form
-        # Editing a wallet
-        # wallet_id = request.POST.get('wallet_id')
+        wallet_id = request.POST.get('wallet_id')
 
-        
-        # if wallet_id:
-        #     wallet = get_object_or_404(Wallet, id=wallet_id, user=request.user)
+        if wallet_id:
+            wallet = get_object_or_404(Wallet, id=wallet_id, user=request.user)
+
+            if 'delete_wallet' in request.POST:  # Check if the delete button was clicked
+                wallet.delete()
+                messages.success(request, "Wallet deleted successfully!")
+                return redirect('dashboard')
+
+            wallet_form_submitted = WalletForm(request.POST, instance=wallet)
             
-        #     if 'delete_wallet' in request.POST:  # Check if the delete button was clicked
-        #         wallet.delete()
-        #         messages.success(request, "Wallet deleted successfully!")
-        #         return redirect('dashboard')
-        #     wallet_form_submitted = WalletForm(request.POST, instance=wallet)
-        #     if wallet_form_submitted.is_valid():
-        #         wallet_form_submitted.save()
-        #         messages.success(request, "Wallet updated successfully!")
-        #         return redirect('dashboard')
-  
-
-
-    wallet_id = request.POST.get('wallet_id')
-
-    if wallet_id:
-        wallet = get_object_or_404(Wallet, id=wallet_id, user=request.user)
-
-        if 'delete_wallet' in request.POST:  # Check if the delete button was clicked
-            wallet.delete()
-            messages.success(request, "Wallet deleted successfully!")
-            return redirect('dashboard')
-
-        wallet_form_submitted = WalletForm(request.POST, instance=wallet)
-        initial_balance = wallet.balance
-        if wallet_form_submitted.is_valid():
             # Get the original balance before saving
-            
-            
-            # Save the updated wallet instance
-            updated_wallet = wallet_form_submitted.save(commit=False)
-            
-            # Get the new balance from the form
-            updated_balance = updated_wallet.balance
+            initial_balance = wallet.balance
+      
+            if wallet_form_submitted.is_valid():
+                updated_balance = wallet_form_submitted.cleaned_data.get('balance')  # Assuming `balance` is a field in the form
+                fat_amount = wallet.update_fat_balance(initial_balance)
+                # expense record
+                if updated_balance < initial_balance:
+                    # Calculate the sum of all previous income and expense transactions with category 'Balance Adjustment'
+                    previous_income_sum = Transaction.objects.filter(
+                        wallet=wallet,
+                        category='Balance Adjustment',
+                        type='Income'
+                    ).aggregate(total_income=Sum('amount'))['total_income'] or Decimal('0.00')
 
-            # Save the wallet instance
-            updated_wallet.save()
+                    previous_expense_sum = Transaction.objects.filter(
+                        wallet=wallet,
+                        category='Balance Adjustment',
+                        type='Expense'
+                    ).aggregate(total_expenses=Sum('amount'))['total_expenses'] or Decimal('0.00')
+                   
+                
+                     # Calculate the adjusted amount for the new income transaction
+                    adjusted_amount = abs(fat_amount) + previous_income_sum  - previous_expense_sum
 
-            # Update the Fat model's amount using the balance difference
-            wallet.update_fat_balance(initial_balance)
-     
-            messages.success(request, "Wallet updated successfully!")
-            return redirect('dashboard')
+                    # Ensure the adjusted amount is positive before creating a transaction
+                    Transaction.objects.create(
+                            wallet=wallet,
+                            type='Expense',
+                            category='Balance Adjustment',
+                            amount=adjusted_amount,  # Use the adjusted amount
+                    )
+                    messages.success(request, "Wallet updated with an income record!")
+                    
+                                
+                
+                # income record
+                elif updated_balance > initial_balance:
+                   # Calculate the sum of all previous income and expense transactions with category 'Balance Adjustment'
+                    previous_income_sum = Transaction.objects.filter(
+                        wallet=wallet,
+                        category='Balance Adjustment',
+                        type='Income'
+                    ).aggregate(total_income=Sum('amount'))['total_income'] or Decimal('0.00')
+
+                    previous_expense_sum = Transaction.objects.filter(
+                        wallet=wallet,
+                        category='Balance Adjustment',
+                        type='Expense'
+                    ).aggregate(total_expenses=Sum('amount'))['total_expenses'] or Decimal('0.00')
+                   
+                
+                     # Calculate the adjusted amount for the new income transaction
+                    adjusted_amount = abs(fat_amount) - abs(previous_income_sum)  - abs(previous_expense_sum)
+
+                    # Ensure the adjusted amount is positive before creating a transaction
+                    adjusted_amount= abs(adjusted_amount)
+                    if adjusted_amount > 0:
+                        Transaction.objects.create(
+                            wallet=wallet,
+                            type='Income',
+                            category='Balance Adjustment',
+                            amount=adjusted_amount,  # Use the adjusted amount
+                        )
+                        messages.success(request, "Wallet updated with an income record!")
+                    else:
+                        messages.info(request, "No additional income adjustment required.")
+                                
+                # Save the wallet
+                wallet.save()
+                
+                
+                messages.success(request, "Wallet updated successfully!")
+                                           
+    
     # Initialize data to display on the dashboard
     wallet_form = WalletForm()
     transaction_form = TransactionForm(user=request.user)
@@ -193,16 +237,12 @@ def dashboard(request):
     wallets = Wallet.objects.filter(user=request.user)
     wallet_forms = {wallet.id: WalletForm(instance=wallet) for wallet in wallets}
     transactions = Transaction.objects.filter(wallet__user=request.user).order_by('-timestamp')
-   # Attach a form pre-populated with each transaction's data
+    # Attach a form pre-populated with each transaction's data
     for transaction in transactions:
         transaction.edit_form = TransactionForm(instance=transaction, user=request.user)
     # Calculate totals
-    
 
-    # Add Fat instances to context
-    # wallet_fat_data = {
-    #     wallet.id: wallet.fat for wallet in wallets if hasattr(wallet, 'fat')
-    # }
+
 
     # Calculate the total fat
     total_fat = Fat.objects.aggregate(total=Sum('amount'))['total'] or 0.00
@@ -211,6 +251,8 @@ def dashboard(request):
     total_expenses = Transaction.objects.filter(wallet__user=request.user, type='Expense').aggregate(total=Sum('amount'))['total'] or 0
     net_balance = total_income - total_expenses
     transaction_forms = {transaction.id: TransactionForm(instance=transaction, user=request.user) for transaction in transactions}
+    total_balance = sum(w.balance for w in Wallet.objects.filter(user=request.user))
+    net_balance = total_income - total_expenses
     return render(request, 'tracker/dashboard.html', {
         'wallets': wallets,
         'wallet_forms':wallet_forms,
@@ -223,6 +265,6 @@ def dashboard(request):
         'net_balance': net_balance,
         'transaction_forms':transaction_forms,
         'total_fat': total_fat,
-        # 'wallet_fat_data': wallet_fat_data,
+        
     })
 

@@ -304,6 +304,7 @@ section h3 {
     transition:all 0.3s ease;
     font-size: 17px;
     margin:0 20px;
+    line-height: 25px;
 }
 
 .dashboard-view {

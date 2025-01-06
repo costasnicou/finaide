@@ -66,6 +66,8 @@ class Wallet(models.Model):
         # Save the updated fat instance
         fat.save()
 
+        return fat.amount  # Return the calculated fat amount
+
 class Transaction(models.Model):
     TYPE_CHOICES = [
         ('Income', 'Income'),

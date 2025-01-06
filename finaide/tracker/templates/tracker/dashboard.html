@@ -49,20 +49,20 @@
         <div class="dashboard-flex">
             <div class="dashboard-view income">
             
-                <p>Total Income: <span class="dashboard-amount">€{{ total_income | floatformat:2  }}</span></p>
+                <p>Total Income: <span class="dashboard-amount">€{{ total_income|default:0.00|floatformat:2 }}</span></p>
             </div>
     
 
             <div class="dashboard-view expenses">
-                <p>Total Expenses:  <span class="dashboard-amount">€{{ total_expenses|floatformat:2  }}</span></p>
+                <p>Total Expenses:  <span class="dashboard-amount">€{{ total_expenses|default:0.00|floatformat:2 }}</span></p>
+            </div>
+
+            <div class="dashboard-view fat">
+                <p>Total Fat: <span class="dashboard-amount">€{{ total_fat|default:0.00|floatformat:2  }}</span></p>
             </div>
 
             <div class="dashboard-view net">
-                <p>Total Fat: <span class="dashboard-amount">€{{ total_fat|floatformat:2  }}</span></p>
-            </div>
-
-            <div class="dashboard-view net">
-                <p>Net Balance: <span class="dashboard-amount">€{{ net_balance|floatformat:2  }}</span></p>
+                <p>Net Balance: <span class="dashboard-amount">€{{ net_balance|default:0.00|floatformat:2  }}</span></p>
             </div>
 
            
@@ -103,6 +103,7 @@
                                 {% endif %}
                             </td>
                             <td>{{ transaction.wallet.name }}</td>
+                            
                             <td>{{ transaction.timestamp|date:"Y-m-d H:i" }}</td>
                             <td>
                              <!-- Edit Button -->
