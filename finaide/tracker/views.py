@@ -228,7 +228,7 @@ def dashboard(request):
                 
                 
                 messages.success(request, "Wallet updated successfully!")
-                                           
+                return redirect('dashboard')                       
     
     # Initialize data to display on the dashboard
     wallet_form = WalletForm()
