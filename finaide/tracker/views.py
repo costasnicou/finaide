@@ -208,7 +208,7 @@ def dashboard(request):
                    
                 
                      # Calculate the adjusted amount for the new income transaction
-                    adjusted_amount = abs(fat_amount) - abs(previous_income_sum)  - abs(previous_expense_sum)
+                    adjusted_amount = abs(fat_amount) - abs(previous_income_sum)  + abs(previous_expense_sum)
 
                     # Ensure the adjusted amount is positive before creating a transaction
                     adjusted_amount= abs(adjusted_amount)
@@ -240,10 +240,10 @@ def dashboard(request):
     # Attach a form pre-populated with each transaction's data
     for transaction in transactions:
         transaction.edit_form = TransactionForm(instance=transaction, user=request.user)
+    
+    
+    
     # Calculate totals
-
-
-
     # Calculate the total fat
     total_fat = Fat.objects.aggregate(total=Sum('amount'))['total'] or 0.00
     total_balance = sum(wallet.balance for wallet in wallets)
@@ -253,6 +253,7 @@ def dashboard(request):
     transaction_forms = {transaction.id: TransactionForm(instance=transaction, user=request.user) for transaction in transactions}
     total_balance = sum(w.balance for w in Wallet.objects.filter(user=request.user))
     net_balance = total_income - total_expenses
+    
     return render(request, 'tracker/dashboard.html', {
         'wallets': wallets,
         'wallet_forms':wallet_forms,
