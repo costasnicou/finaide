@@ -186,13 +186,11 @@ td{
 
 
 
-
-.transaction-section-wrapper{
-    width: 80%;
+.transaction-section-wrapper {
+    width: 85%;
     margin: 0 auto;
-    max-height:400px ;
+    max-height: 400px;
     overflow-x: scroll;
-   
 }
 
 

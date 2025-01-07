@@ -65,14 +65,18 @@ def dashboard(request):
                     wallet.balance += transaction.amount
                 else:
                     wallet.balance -= transaction.amount
+                # Assign the wallet's current balance to the transaction's total_balance
+                total_balance = sum(w.balance for w in Wallet.objects.filter(user=request.user))
+                if transaction.type == 'Income':
+                    transaction.total_balance = total_balance + transaction.amount
+                else:
+                    transaction.total_balance = total_balance - transaction.amount
                 transaction.save()
                 wallet.save()
             
-                # # Recalculate total balance across all wallets
-                # total_balance = sum(w.balance for w in Wallet.objects.filter(user=request.user)) +5
+               
 
-
-                # return redirect('dashboard')
+                return redirect('dashboard')
         
             # Handle transaction edit or delete
        
@@ -139,6 +143,13 @@ def dashboard(request):
 
                 original_wallet.save()
 
+            # Assign the wallet's current balance to the transaction's total_balance
+            total_balance = sum(w.balance for w in Wallet.objects.filter(user=request.user))
+            print(f'Total Balance: {total_balance}')
+            if updated_transaction.type == 'Income':
+                updated_transaction.total_balance = total_balance
+            else:
+                updated_transaction.total_balance = total_balance
             # Save the updated transaction
             updated_transaction.save()
             messages.success(request, "Transaction updated successfully!")
@@ -173,17 +184,19 @@ def dashboard(request):
                    
                 
                      # Calculate the adjusted amount for the new income transaction
-                    adjusted_amount = abs(fat_amount) - abs(previous_expense_sum)
+                    adjusted_amount = Decimal(abs(fat_amount)) - Decimal(abs(previous_expense_sum))
 
                     
                     adjusted_amount= abs(adjusted_amount)   
-                    
+                    total_balance = sum(w.balance for w in Wallet.objects.filter(user=request.user))
+
                     # Ensure the adjusted amount is positive before creating a transaction
                     Transaction.objects.create(
                             wallet=wallet,
                             type='Expense',
                             category='Balance Adjustment',
                             amount=adjusted_amount,  # Use the adjusted amount
+                            total_balance = Decimal(total_balance) - adjusted_amount,
                     )
                     messages.success(request, "Wallet updated with an income record!")
                     
@@ -198,19 +211,21 @@ def dashboard(request):
                         type='Income',
                         category='Balance Adjustment',
                     ).aggregate(total_income=Sum('amount'))['total_income'] or Decimal('0.00')
-                    print(f'Previous Income Sum: {previous_income_sum}')
+                    
                 
                      # Calculate the adjusted amount for the new income transaction
-                    adjusted_amount = abs(fat_amount) - abs(previous_income_sum)  
+                    adjusted_amount = Decimal(abs(fat_amount)) - Decimal(abs(previous_income_sum))  
                    
                     # Ensure the adjusted amount is positive before creating a transaction
                     adjusted_amount= abs(adjusted_amount)
                     if adjusted_amount > 0:
+                        total_balance = sum(w.balance for w in Wallet.objects.filter(user=request.user))
                         Transaction.objects.create(
                             wallet=wallet,
                             type='Income',
                             category='Balance Adjustment',
                             amount=adjusted_amount,  # Use the adjusted amount
+                            total_balance = Decimal(total_balance) + Decimal(adjusted_amount),
                         )
                         messages.success(request, "Wallet updated with an income record!")
                     else:
