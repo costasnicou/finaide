@@ -45,10 +45,7 @@ def signup(request):
 
 @login_required
 def dashboard(request):
-    # Initialize total_expenses and total_income with default values
-    # total_expenses = Decimal('0.00')
-    # total_income = Decimal('0.00')
-    # Process form submission for creating/editing a transaction
+
     if request.method == 'POST':
         
         if 'submit_wallet_form' in request.POST:  # Check which form was submitted
@@ -71,7 +68,11 @@ def dashboard(request):
                 transaction.save()
                 wallet.save()
             
-                return redirect('dashboard')
+                # # Recalculate total balance across all wallets
+                # total_balance = sum(w.balance for w in Wallet.objects.filter(user=request.user)) +5
+
+
+                # return redirect('dashboard')
         
             # Handle transaction edit or delete
        
@@ -161,25 +162,22 @@ def dashboard(request):
             if wallet_form_submitted.is_valid():
                 updated_balance = wallet_form_submitted.cleaned_data.get('balance')  # Assuming `balance` is a field in the form
                 fat_amount = wallet.update_fat_balance(initial_balance)
+               
                 # expense record
-                if updated_balance < initial_balance:
-                    # Calculate the sum of all previous income and expense transactions with category 'Balance Adjustment'
-                    previous_income_sum = Transaction.objects.filter(
-                        wallet=wallet,
-                        category='Balance Adjustment',
-                        type='Income'
-                    ).aggregate(total_income=Sum('amount'))['total_income'] or Decimal('0.00')
-
+                if updated_balance < initial_balance: 
                     previous_expense_sum = Transaction.objects.filter(
                         wallet=wallet,
-                        category='Balance Adjustment',
-                        type='Expense'
+                        type='Expense',
+                        category='Balance Adjustment'
                     ).aggregate(total_expenses=Sum('amount'))['total_expenses'] or Decimal('0.00')
                    
                 
                      # Calculate the adjusted amount for the new income transaction
-                    adjusted_amount = abs(fat_amount) + previous_income_sum  - previous_expense_sum
+                    adjusted_amount = abs(fat_amount) - abs(previous_expense_sum)
 
+                    
+                    adjusted_amount= abs(adjusted_amount)   
+                    
                     # Ensure the adjusted amount is positive before creating a transaction
                     Transaction.objects.create(
                             wallet=wallet,
@@ -193,23 +191,18 @@ def dashboard(request):
                 
                 # income record
                 elif updated_balance > initial_balance:
+                    
                    # Calculate the sum of all previous income and expense transactions with category 'Balance Adjustment'
                     previous_income_sum = Transaction.objects.filter(
                         wallet=wallet,
+                        type='Income',
                         category='Balance Adjustment',
-                        type='Income'
                     ).aggregate(total_income=Sum('amount'))['total_income'] or Decimal('0.00')
-
-                    previous_expense_sum = Transaction.objects.filter(
-                        wallet=wallet,
-                        category='Balance Adjustment',
-                        type='Expense'
-                    ).aggregate(total_expenses=Sum('amount'))['total_expenses'] or Decimal('0.00')
-                   
+                    print(f'Previous Income Sum: {previous_income_sum}')
                 
                      # Calculate the adjusted amount for the new income transaction
-                    adjusted_amount = abs(fat_amount) - abs(previous_income_sum)  + abs(previous_expense_sum)
-
+                    adjusted_amount = abs(fat_amount) - abs(previous_income_sum)  
+                   
                     # Ensure the adjusted amount is positive before creating a transaction
                     adjusted_amount= abs(adjusted_amount)
                     if adjusted_amount > 0:
