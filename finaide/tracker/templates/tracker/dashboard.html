@@ -18,20 +18,21 @@
         <div class="wallets">
             <div class="wallet-flex">
                 {% for wallet in wallets %}
-                    <p class="wallet"><br>
+                    <div class="wallet">
+                        <p>
                         <span class="wallet-header"><strong>{{ wallet.name }}</strong></span><br>
                         Balance: <span class="wallet-amount"> €{{ wallet.balance }}</span><br>
-                        {% if wallet.fat %}
+                        <!-- {% if wallet.fat %}
                             Fat Amount: <span class="wallet-amount"> €{{ wallet.fat.amount }}</span>
                         {% else %}
                             No Fat data available.
-                        {% endif %}
-                                            <br><br>
+                        {% endif %} -->
+                        </p>
                        
-                        <button type="button" class="btn open-edit-wallet-modal" onclick="openEditWalletModal({{ wallet.id }})" data-toggle="modal" data-target="#editWalletModal{{ wallet.id }}">
+                        <button type="button" class="wallet-btn open-edit-wallet-modal" onclick="openEditWalletModal({{ wallet.id }})" data-toggle="modal" data-target="#editWalletModal{{ wallet.id }}">
                             Edit
                         </button>
-                    </p>
+                    </div>
                        
                     {% empty %}
                       <p>No Wallets available</p>
@@ -117,7 +118,7 @@
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="6">No transactions available.</td>
+                            <td colspan="7">No transactions available.</td>
                         </tr>
              
                     

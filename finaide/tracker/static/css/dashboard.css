@@ -121,26 +121,6 @@ box-shadow: 2px 8px 31px -13px rgba(0,0,0,0.75);
 }
 
 
-.wallet:hover{
-    background-color: rgb(80, 179, 181);
-    color: white;
-}
-
-.wallet a{
-    color: white;
-    margin-top: 10px;
-    display: inline-block;
-    text-decoration: none;
-    border:1px solid white ;
-    padding:10px;
-}
-
-.wallet a:hover{
-    /* background-color: rgb(191, 66, 66) ; */
-    color: white;
-    background: rgba(65, 156, 156, 0.534);
-    background: linear-gradient(90deg, rgba(65,156,156,1) 0%, rgba(26, 190, 154, 0.628) 100%);
-}
 
 .show-form{
     margin: 20px;
@@ -296,7 +276,7 @@ section h3 {
     padding: 20px;
     text-align: center;
     color: #ffffff;
-    background: linear-gradient(145deg, #38b2ac, #285e61);
+    background: linear-gradient(145deg, #5dc0bb, #285e61);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition:all 0.3s ease;
@@ -305,12 +285,29 @@ section h3 {
     line-height: 25px;
 }
 
+.wallet-btn{
+    padding: 10px 40px;
+    border: 1px solid rgba(27, 158, 123, 0.976);
+    color: white;
+    border-radius: 10px;
+    text-decoration: none;
+    transition:all 0.3s ease;
+    background-color: rgb(26, 98, 84);
+   
+}
+
+
+.wallet-btn:hover{
+    background-color: rgb(43, 164, 140);
+}
+
 .dashboard-view {
     width: 245px;
     padding: 30px;
     text-align: center;
     color: #ffffff;
-    background: linear-gradient(135deg, #38b2ac, #285e61);
+    /* background: linear-gradient(135deg, #38b2ac, #285e61); */
+    background: linear-gradient(90deg, #5dc0bb, #285e61);
     border-radius: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -338,24 +335,7 @@ section h3 {
     font-weight: bold;
 }
 
-.wallet:hover {
-    background-color: #319795;
-}
 
-.wallet a {
-    color: #ffffff;
-    text-decoration: none;
-    display: inline-block;
-    margin-top: 10px;
-    padding: 10px;
-    border-radius: 5px;
-    background: #285e61;
-    transition: background 0.3s ease;
-}
-
-.wallet a:hover {
-    background: #38b2ac;
-}
 
 .dashboard-btn {
     width: 150px;
@@ -383,6 +363,7 @@ table {
 
 thead {
     background: linear-gradient(90deg, #38b2ac, #285e61);
+    
     color: white;
 }
 

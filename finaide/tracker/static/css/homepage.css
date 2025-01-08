@@ -3,6 +3,10 @@ html,body{
     margin: 0;
     font-family: "Roboto", serif;
 }
+section{
+  padding: 40px;
+}
+
 
 .main-menu{
     text-align: center; 
@@ -29,29 +33,28 @@ html,body{
 .logout-btn{
   background-color: rgb(19, 134, 103);
   color: white;
-  padding: 5px 10px;
+  padding: 10px 10px;
   border-radius: 10px;
-  margin: 20px;
+  margin-right: 20px;
+  transition: all ease-in 0.5s;
 
 
 }
 
 .logout-btn:hover{
-  background-color: rgb(14, 94, 73);
+  background-color: rgb(19, 130, 100);
 }
 .main-menu a{
     color: white;
     text-decoration: none;
     margin: 20px;
+    transition: all ease-in 0.5;
  
 }
 
-section{
-    padding: 40px;
-}
 
 .main-menu a:hover{
-    color: rgb(112, 199, 164);
+    font-weight: bold;
     text-decoration: none;
  
 }
@@ -88,20 +91,17 @@ section{
 
 
 .btn{
-    background-color: rgba(0, 0, 0, 0.841);
-    background-color: white;
-    background-color: rgba(7, 87, 71, 0.841);
     padding: 10px 40px;
     border: 1px solid rgba(0, 0, 0, 0.976);
     color: white;
     border-radius: 10px;
-    /* transition: all ease-in 0.3s; */
     text-decoration: none;
     transition:all 0.3s ease;
+    background-color: rgb(65,156,156);
 }
 
 .btn:hover{
-    background-color: rgba(5, 64, 52, 0.841);
+    background-color: rgb(52, 127, 127);
     color: white;
 }
 
@@ -131,6 +131,8 @@ section{
 .promotion{
   
     background-color: rgb(72, 110, 90);
+    background: rgb(57, 136, 116);
+    /* background: linear-gradient(90deg, rgb(57, 136, 136) 0%, rgb(8, 69, 56) 100%); */
     margin-top: 80px;
     height: 80px;
     position: relative;
@@ -205,6 +207,8 @@ section{
 .reason h4 {
     text-align: center;
     background-color: rgb(21, 114, 91);
+    background: rgb(65,156,156);
+    /* background: linear-gradient(90deg, rgb(14, 111, 113) 0%, rgb(8, 69, 56) 100%); */
     color: white;
     padding: 10px;
     width: 270px;
@@ -271,7 +275,7 @@ section{
     font-family: FontAwesome;
     content: '\f00c';
     font-size: 20px;
-    color: rgb(4, 75, 31);
+    color: rgb(52, 127, 127);
     /* margin: 20px;
      */
      position: relative;
@@ -295,8 +299,8 @@ section{
 
 .testimonials-title {
 
-  color:  rgba(54, 106, 85, 0.519);
-  border-color:rgba(54, 106, 85, 0.519);
+  color:  rgb(52, 127, 127);;
+  border-color:rgba(54, 106, 85, 0.637);
   position: relative;
   top: 50px;
   font-weight: 400;
@@ -314,23 +318,18 @@ section{
   /* margin-top: 100px; */
   position: relative;
   color: white;
-  /* background-color: rgba(179, 179, 179, 0.519);
-  background-color: rgba(43, 83, 67, 0.519); */
-  /* background-color: rgba(27, 27, 27, 0.664); */
-  background: rgb(65,156,156);
-  background: linear-gradient(90deg, rgba(65,156,156,1) 0%, rgba(8, 69, 56, 0.547) 100%);
+  background-color: rgb(87, 149, 149);
+  background-color: rgb(112, 146, 146);
   overflow: hidden;
   border-radius: 90px;
   box-shadow: 14px 10px 102px -23px rgba(0,0,0,0.75);
-    -webkit-box-shadow: 14px 10px 102px -23px rgba(0,0,0,0.75);
-    -moz-box-shadow: 14px 10px 102px -23px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 14px 10px 102px -23px rgba(0,0,0,0.75);
+  -moz-box-shadow: 14px 10px 102px -23px rgba(0,0,0,0.75);
 
-    transition: all ease-in 0.5s;
-  }
+  transition: all ease-in 0.5s;
+}
 
-  .slider:hover{
-    background-color: rgba(43, 83, 67, 0.519);
-  }
+
   .slide {
     position: absolute;
     top: 0;
@@ -465,11 +464,27 @@ font-size: 1.3rem;
 }
 
 
+.call-to-action{
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .call-to-action-article{
   text-align: center;
   margin: 0 auto;
   width: 30%;
   color: rgb(65, 65, 65);
+}
+
+.call-to-action-article h4{
+  font-size: 30px;
+}
+
+.call-to-action-article p{
+  font-size: 20px;
 }
 
 
